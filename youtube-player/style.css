@@ -1,0 +1,162 @@
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    color: white;
+}
+
+.video-container{
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    background: black;
+}
+
+.video-container.theater,
+.video-container.full{
+    max-width: initial;
+    width: 100%;
+}
+
+.video-container.theater{
+    max-height: 90vh;
+}
+
+.video-container.full{
+    max-height: 100vh;
+}
+
+.video-container:not(.theater) .wide{
+    display: none;
+}
+
+.video-container.theater .tall{
+    display: none;
+}
+
+.video-container:not(.full) .close{
+    display: none;
+}
+
+.video-container.theater .open{
+    display: none;
+}
+
+.video{
+    width: 100%;
+}
+
+.video-control-container{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 350ms ease-in-out;
+    z-index: 100;
+}
+
+.video-control-container::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+    aspect-ratio: 6 / 1;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.video-container:not(.paused) .pause-icon{
+    display: none;
+}
+
+.video-container.paused .play-icon{
+    display: none;
+}
+
+.video-container:not(.full) .close{
+    display: none;
+}
+
+.video-container.full .open{
+    display: none;
+}
+
+.video-container:hover
+.video-control-container
+{
+    opacity: 1;
+}
+
+.controls button{
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.controls{
+    display: flex;
+    gap: .5rem;
+    padding: .25rem;
+    align-items: center;
+}
+
+/* start volume container */
+.volume-container{
+    display: flex;
+    align-items: center;
+}
+
+.volume-muted-icon,
+.volume-high-icon,
+.volume-low-icon{
+    display: none;
+}
+
+.video-container[data-volume-level="high"] .volume-high-icon{
+    display: block;
+}
+.video-container[data-volume-level="low"] .volume-low-icon{
+    display: block;
+}
+.video-container[data-volume-level="muted"] .volume-muted-icon{
+    display: block;
+}
+
+.volume-slider{
+    transform-origin: left;
+    transform: scaleX(0);
+    width: 0;
+    transition: width 200ms ease-in-out, transform 200ms ease-in-out;
+}
+
+.volume-container:hover .volume-slider,
+.volume-slider:focus-within{
+    width: 100px;
+    transform: scaleX(1);
+}
+
+/* duration */
+
+.duration-container{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 10px;
+}
+
+/* captions */
+.video-container.captions .captions-btn{
+    border-bottom: 3px solid red;
+}
