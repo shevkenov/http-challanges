@@ -160,3 +160,69 @@ body{
 .video-container.captions .captions-btn{
     border-bottom: 3px solid red;
 }
+
+/* timeline */
+
+.timeline-container{
+    height: 7px;
+    display: flex;
+    align-items: center;
+    margin: 0.5rem;
+    cursor: pointer;
+
+}
+
+.timeline{
+    width: 100%;
+    height: 3px;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.timeline-container:hover .timeline{
+    height: 100%;
+}
+
+.timeline::before{
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: calc(100% - var(--preview-position) * 100%);
+    position: absolute;
+    height: 100%;
+    background: rgba(150, 150, 150);
+    display: none;
+}
+.timeline::after{
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: calc(100% - var(--progress-position) * 100%);
+    position: absolute;
+    height: 100%;
+    background: red;
+    display: none;
+}
+
+.thumb-indicator{
+    --scale: 0;
+    position: absolute;
+    top: -50%;
+    transform: translateX(-50%) scale(var(--scale));
+    left: calc(var(--progress-position) * 100%);
+    height: 200%;
+    background: red;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+}
+
+.timeline-container:hover .thumb-indicator{
+    --scale: 1
+}
+
+.timeline-container:hover .timeline::before, .timeline::after{
+    display: block;
+}
+

@@ -8,18 +8,21 @@ const muteBtn = document.querySelector(".mute-btn");
 const volumeSlider = document.querySelector(".volume-slider");
 const currentTime = document.querySelector(".current-time");
 const totalTime = document.querySelector(".total-time");
-const captions = document.querySelector(".captions-btn")
+const captions = document.querySelector(".captions-btn");
+const timeline = document.querySelector(".timeline");
+const timelineContainer = document.querySelector(".timeline-container");
+const thumb = document.querySelector(".thumb-indicator");
 
 
 // duration 
-
 video.addEventListener("loadeddata", () => {
     totalTime.textContent = formatTimer(video.duration);
 })
 
 video.addEventListener("timeupdate", () => {
-    
     currentTime.textContent = formatTimer(video.currentTime);
+    const progress = video.currentTime / video.duration;
+    timelineContainer.style.setProperty("--progress-position", progress);
 })
 
 function formatTimer(time){
@@ -46,7 +49,7 @@ muteBtn.addEventListener("click", () => {
 
 video.addEventListener("volumechange", () => {
     const volume = volumeSlider.value;
-    console.log(volume)
+
     let volumeType;
     if(video.muted || video.volume === 0){
         volumeSlider.value = 0;
@@ -134,3 +137,11 @@ playPauseBtn.addEventListener("click", toggleVideo)
 function toggleVideo() {
     video.paused ? video.play() : video.pause();
 }
+
+// timeline
+timelineContainer.addEventListener("mousemove", (e) => {
+    const rect  = timelineContainer.getBoundingClientRect();
+    const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
+
+    timelineContainer.style.setProperty("--preview-position", percent);
+});
